@@ -18,7 +18,18 @@ services:
       - ~/.ollama:/root/.ollama
     tty: true
 
-
+  ollama_loader:
+    image: curlimages/curl:latest
+    depends_on:
+      - ollama
+    entrypoint: >
+      sh -c "
+        echo ' Esperando que Ollama esté listo...';
+        until curl -s http://ollama:11434; do sleep 2; done;
+        echo ' Lanzando modelo mistral...';
+        curl -X POST http://ollama:11434/api/generate -d '{\"model\": \"mistral\", \"prompt\": \"Hola\"}'
+      "
+      
 volumes:
   ollama_models:
 

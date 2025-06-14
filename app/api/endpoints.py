@@ -6,6 +6,8 @@ from datetime import datetime
 from utils.file_utils import is_pdf, convert_pdf_to_images
 from services.ocr_service import extract_text_from_image
 from services.llm_service import get_summary_and_entities
+from utils.history_utils import save_to_history 
+from utils.history_utils import load_history
 
 router = APIRouter()
 
@@ -30,10 +32,20 @@ async def upload_file(file: UploadFile = File(...)):
 
     llm_result = get_summary_and_entities(extracted_text)
 
-    return {
+    entry =  {
         "filename": file.filename,
         "timestamp": datetime.now().isoformat(),
         "text": extracted_text.strip(),
         "summary": llm_result["summary"],
         "entities": llm_result["entities"]
     }
+
+    save_to_history(entry)
+    return entry
+
+@router.get("/history")
+def get_history():
+   return load_history()
+
+
+
