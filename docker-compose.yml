@@ -1,0 +1,24 @@
+services:
+  web:
+    build: .
+    container_name: web
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+      - ./archivos:/archivos
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ~/.ollama:/root/.ollama
+    tty: true
+
+
+volumes:
+  ollama_models:
+
