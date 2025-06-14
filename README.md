@@ -1,6 +1,6 @@
-# Reto Backend – OCR + IA (FastAPI + Mistral"ollama")
+# Reto Backend – OCR + IA (FastAPI + Mistral "ollama")
 
-**Autor: Santiago Narnjo Sanchez**
+**Autor: Santiago Naranjo Sanchez**
 
 Este repositorio resuelve el desafío técnico de construir una API capaz de:
 
@@ -26,9 +26,9 @@ Este repositorio resuelve el desafío técnico de construir una API capaz de:
 Reto_backend_IA/
 ├── app/                # Código FastAPI
 │   ├── api/            # Rutas (endpoints)
-|   |── frontend        # index.html, assets
 │   ├── services/       # OCR y LLM helper functions
-│   └── main.py         # Instancia FastAPI + montaje frontend          
+│   └── main.py         # Instancia FastAPI + montaje frontend
+├── frontend/           # index.html, assets
 ├── archivos/           # PDFs, imágenes subidas y history.json
 ├── Dockerfile          # Imagen de la API + Tesseract
 ├── docker-compose.yml  # Levanta API + Ollama
@@ -137,7 +137,21 @@ Arranca Ollama y luego `uvicorn app.main:app --reload` para desarrollo.
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | **OpenAI GPT‑4o**                            | Precisión SOTA en comprensión+razonamiento; funciones de "tool calling"; latencia global baja (regiones múltiples); ecosistema maduro (embeddings, moderation, vision). | Código cerrado; exige enviar datos fuera de la org; precio superior a modelos open‑source si la escala es grande. |
 | **Google Gemini 1.5 Pro**                    | Context window masivo (1 M tokens); buen *multimodal*; integración nativa con Google Cloud.                                                                             | Aún en beta en algunos países; ecosistema de plugins más pequeño.                                                 |
-| **Open‑source (Llama‑3 70B, Mixtral 8x22B)** | Datos on‑prem; personalización vía LoRA; coste variable ≈ 0 una vez desplegado.                                                                                         | Requiere operar infraestructura GPU y MLOps; menor desempeño en tareas complejas que GPT‑4o.                      |
+| **DeepSeek‑V2 67B**                          | Modelo open‑source mixto (inglés‑chino) con excelente rendimiento en benchmarks; licencia Apache 2; menor tamaño que Llama‑3 70B ⇒ +rápido y menos RAM.                 | Comunidad aún pequeña; soporte multilingüe (ES) más limitado; requiere operar infraestructura GPU propia.         |
+| **Open‑source (Llama‑3 70B, Mixtral 8x22B)** | Datos on‑prem; personalización vía LoRA; coste variable ≈ 0 una vez desplegado.                                                                                         | Requiere operar infraestructura GPU y MLOps; menor desempeño en tareas complejas que GPT‑4o.                      |
+
+**Si el precio no es limitante**, elegiría **GPT‑4o** para la versión de producción porque entrega:
+
+1. **Máxima precisión** en generación de resúmenes y NER sin finos ajustes.
+2. **Latencia global** con redundancia (Azure OpenAI + OpenAI).
+3. **Mantenimiento casi nulo** (no hay que actualizar pesos ni escalar clusters GPU).
+
+Para escenarios **on‑prem** o con datos altamente sensibles, migraría a **Llama‑3 70B** o **DeepSeek‑V2 67B** desplegados en Kubernetes con vLLM.
+
+\--------|----------------|-------------|
+\| **OpenAI GPT‑4o** | Precisión SOTA en comprensión+razonamiento; funciones de "tool calling"; latencia global baja (regiones múltiples); ecosistema maduro (embeddings, moderation, vision). | Código cerrado; exige enviar datos fuera de la org; precio superior a modelos open‑source si la escala es grande. |
+\| **Google Gemini 1.5 Pro** | Context window masivo (1 M tokens); buen *multimodal*; integración nativa con Google Cloud. | Aún en beta en algunos países; ecosistema de plugins más pequeño. |
+\| **Open‑source (Llama‑3 70B, Mixtral 8x22B)** | Datos on‑prem; personalización vía LoRA; coste variable ≈ 0 una vez desplegado. | Requiere operar infraestructura GPU y MLOps; menor desempeño en tareas complejas que GPT‑4o. |
 
 **Si el precio no es limitante**, elegiría **GPT‑4o** para la versión de producción porque entrega:
 
@@ -148,6 +162,7 @@ Arranca Ollama y luego `uvicorn app.main:app --reload` para desarrollo.
 Para escenarios **on‑prem** o con datos altamente sensibles, migraría a **Llama‑3 70B** desplegado en Kubernetes con vLLM.
 
 ---
+
 
 
 
