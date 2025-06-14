@@ -26,9 +26,9 @@ Este repositorio resuelve el desafío técnico de construir una API capaz de:
 Reto_backend_IA/
 ├── app/                # Código FastAPI
 │   ├── api/            # Rutas (endpoints)
+|   |── frontend        # index.html, assets
 │   ├── services/       # OCR y LLM helper functions
-│   └── main.py         # Instancia FastAPI + montaje frontend
-├── frontend/           # index.html, assets
+│   └── main.py         # Instancia FastAPI + montaje frontend          
 ├── archivos/           # PDFs, imágenes subidas y history.json
 ├── Dockerfile          # Imagen de la API + Tesseract
 ├── docker-compose.yml  # Levanta API + Ollama
