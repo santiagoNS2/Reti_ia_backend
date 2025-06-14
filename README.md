@@ -1,4 +1,6 @@
-# Reto Backend – OCR + IA (FastAPI + Mistral)
+# Reto Backend – OCR + IA (FastAPI + Mistral"ollama")
+
+**Autor: Santiago Narnjo Sanchez**
 
 Este repositorio resuelve el desafío técnico de construir una API capaz de:
 
@@ -24,9 +26,9 @@ Este repositorio resuelve el desafío técnico de construir una API capaz de:
 Reto_backend_IA/
 ├── app/                # Código FastAPI
 │   ├── api/            # Rutas (endpoints)
+|   |── frontend        # index.html, assets
 │   ├── services/       # OCR y LLM helper functions
-│   └── main.py         # Instancia FastAPI + montaje frontend
-├── frontend/           # index.html, assets
+│   └── main.py         # Instancia FastAPI + montaje frontend          
 ├── archivos/           # PDFs, imágenes subidas y history.json
 ├── Dockerfile          # Imagen de la API + Tesseract
 ├── docker-compose.yml  # Levanta API + Ollama
@@ -127,6 +129,25 @@ Arranca Ollama y luego `uvicorn app.main:app --reload` para desarrollo.
 
 ---
 
-## 🔒 Licencia
+## 🔮 ¿Qué usaría en producción y por qué?
 
-MIT © 2025 Santiago NS2 – Este proyecto se publica con fines académicos y puede usarse libremente citando la autoría.
+> **Pregunta del reto:** “*Documenta claramente qué usarías en producción (ej. OpenAI, Gemini, etc.)*”.
+
+| Opción                                       | Ventajas clave                                                                                                                                                          | Desventajas                                                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **OpenAI GPT‑4o**                            | Precisión SOTA en comprensión+razonamiento; funciones de "tool calling"; latencia global baja (regiones múltiples); ecosistema maduro (embeddings, moderation, vision). | Código cerrado; exige enviar datos fuera de la org; precio superior a modelos open‑source si la escala es grande. |
+| **Google Gemini 1.5 Pro**                    | Context window masivo (1 M tokens); buen *multimodal*; integración nativa con Google Cloud.                                                                             | Aún en beta en algunos países; ecosistema de plugins más pequeño.                                                 |
+| **Open‑source (Llama‑3 70B, Mixtral 8x22B)** | Datos on‑prem; personalización vía LoRA; coste variable ≈ 0 una vez desplegado.                                                                                         | Requiere operar infraestructura GPU y MLOps; menor desempeño en tareas complejas que GPT‑4o.                      |
+
+**Si el precio no es limitante**, elegiría **GPT‑4o** para la versión de producción porque entrega:
+
+1. **Máxima precisión** en generación de resúmenes y NER sin finos ajustes.
+2. **Latencia global** con redundancia (Azure OpenAI + OpenAI).
+3. **Mantenimiento casi nulo** (no hay que actualizar pesos ni escalar clusters GPU).
+
+Para escenarios **on‑prem** o con datos altamente sensibles, migraría a **Llama‑3 70B** desplegado en Kubernetes con vLLM.
+
+---
+
+
+
