@@ -148,18 +148,6 @@ Arranca Ollama y luego `uvicorn app.main:app --reload` para desarrollo.
 
 Para escenarios **on‑prem** o con datos altamente sensibles, migraría a **Llama‑3 70B** o **DeepSeek‑V2 67B** desplegados en Kubernetes con vLLM.
 
-\--------|----------------|-------------|
-\| **OpenAI GPT‑4o** | Precisión SOTA en comprensión+razonamiento; funciones de "tool calling"; latencia global baja (regiones múltiples); ecosistema maduro (embeddings, moderation, vision). | Código cerrado; exige enviar datos fuera de la org; precio superior a modelos open‑source si la escala es grande. |
-\| **Google Gemini 1.5 Pro** | Context window masivo (1 M tokens); buen *multimodal*; integración nativa con Google Cloud. | Aún en beta en algunos países; ecosistema de plugins más pequeño. |
-\| **Open‑source (Llama‑3 70B, Mixtral 8x22B)** | Datos on‑prem; personalización vía LoRA; coste variable ≈ 0 una vez desplegado. | Requiere operar infraestructura GPU y MLOps; menor desempeño en tareas complejas que GPT‑4o. |
-
-**Si el precio no es limitante**, elegiría **GPT‑4o** para la versión de producción porque entrega:
-
-1. **Máxima precisión** en generación de resúmenes y NER sin finos ajustes.
-2. **Latencia global** con redundancia (Azure OpenAI + OpenAI).
-3. **Mantenimiento casi nulo** (no hay que actualizar pesos ni escalar clusters GPU).
-
-Para escenarios **on‑prem** o con datos altamente sensibles, migraría a **Llama‑3 70B** desplegado en Kubernetes con vLLM.
 
 ---
 
